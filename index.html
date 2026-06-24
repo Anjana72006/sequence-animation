@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Sequence Animation</title>
+
+<style>
+    body {
+        margin: 0;
+        height: 100vh;
+        font-family: Arial;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+
+        /* 🌈 Animated gradient background */
+        background: linear-gradient(-45deg, #d4bed5, #c59dc2, #a3d8b8, #fad0c4);
+        background-size: 400% 400%;
+        animation: bgMove 10s ease infinite;
+    }
+
+    @keyframes bgMove {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
+    button {
+        padding: 12px 25px;
+        border: none;
+        color: white;
+        border-radius: 10px;
+        cursor: pointer;
+        margin-bottom: 40px;
+
+        /* 🌈 Gradient button */
+        background: linear-gradient(45deg, #ff4d6d, #ff8fa3, #ffb199);
+        background-size: 200% 200%;
+        transition: 0.3s;
+        font-size: 16px;
+    }
+
+    button:hover {
+        transform: scale(1.08);
+        background-position: right center;
+    }
+
+    .container {
+        display: flex;
+        gap: 15px;
+    }
+
+    .box {
+        width: 70px;
+        height: 70px;
+        border-radius: 12px;
+
+        
+        background: linear-gradient(45deg, #8b6f47, #c9a66b, #ffd93d);
+        background-size: 200% 200%;
+
+        opacity: 0;
+        transform: translateY(40px) scale(0.5) rotate(0deg);
+        transition: all 0.6s ease;
+    }
+
+    .box.show {
+        opacity: 1;
+        transform: translateY(-10px) scale(1.1) rotate(180deg);
+        background-position: right center;
+    }
+
+    .box.exit {
+        opacity: 0;
+        transform: translateY(-220px) scale(0.3) rotate(720deg);
+    }
+</style>
+</head>
+<body>
+
+<button id="startBtn" onclick="startAnimation()">Start Animation</button>
+
+<div class="container">
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+</div>
+
+<script>
+
+const boxes = document.querySelectorAll(".box");
+const button = document.getElementById("startBtn");
+
+function startAnimation() {
+
+    button.style.display = "none";
+
+    boxes.forEach(box => {
+        box.classList.remove("show");
+        box.classList.remove("exit");
+    });
+
+    let totalTime = 0;
+
+    for (let i = 0; i < boxes.length; i++) {
+
+        setTimeout(() => {
+
+            boxes[i].classList.add("show");
+
+            setTimeout(() => {
+                boxes[i].classList.add("exit");
+            }, 800);
+
+        }, i * 400);
+
+        totalTime = i * 400 + 1200;
+    }
+
+    setTimeout(() => {
+        button.style.display = "inline-block";
+    }, totalTime + 300);
+}
+
+</script>
+
+</body>
+</html>
